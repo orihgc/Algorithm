@@ -28,25 +28,41 @@
 
 package leetcode.editor.cn;
 
-public class PathSumIii{
+public class PathSumIii {
     public static void main(String[] args) {
-         Solution solution = new PathSumIii().new Solution();
+        Solution solution = new PathSumIii().new Solution();
     }
     //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public int pathSum(TreeNode root, int sum) {
 
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     * int val;
+     * TreeNode left;
+     * TreeNode right;
+     * TreeNode(int x) { val = x; }
+     * }
+     */
+    class Solution {
+        int count = 0;
+
+        public int pathSum(TreeNode root, int sum) {
+            if(root==null)return 0;
+            countSum(root,sum);
+            pathSum(root.left,sum);
+            pathSum(root.right,sum);
+            return count;
+        }
+
+        private void countSum(TreeNode node, int sum) {
+            if (node != null) {
+                sum -= node.val;
+                if (sum == 0) count++;
+                countSum(node.left, sum);
+                countSum(node.right, sum);
+            }
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }

@@ -25,25 +25,48 @@
 
 package leetcode.editor.cn;
 
-public class PathSumIi{
+import java.util.ArrayList;
+import java.util.List;
+
+public class PathSumIi {
     public static void main(String[] args) {
-         Solution solution = new PathSumIi().new Solution();
+        Solution solution = new PathSumIi().new Solution();
     }
     //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public List<List<Integer>> pathSum(TreeNode root, int sum) {
 
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     * int val;
+     * TreeNode left;
+     * TreeNode right;
+     * TreeNode(int x) { val = x; }
+     * }
+     */
+    class Solution {
+        public List<List<Integer>> pathSum(TreeNode root, int sum) {
+            List<List<Integer>> result = new ArrayList<>();
+            backTrack(root, new ArrayList<>(), result, sum);
+            return result;
+        }
+
+        private void backTrack(TreeNode node, List<Integer> path, List<List<Integer>> result, int sum) {
+            if (node == null) return;
+            if (node.left == null && node.right == null) {
+                if (node.val == sum) {
+                    path.add(node.val);
+                    result.add(new ArrayList<>(path));
+                    path.remove(path.size()-1);
+                }
+                return;
+            }
+            sum -= node.val;
+            path.add(node.val);
+            backTrack(node.left, path, result, sum);
+            backTrack(node.right, path, result, sum);
+            path.remove(path.size()-1);
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
